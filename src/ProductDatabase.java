@@ -1,5 +1,8 @@
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -18,7 +21,20 @@ public class ProductDatabase {
         this.filename = filename;
         this.records = new ArrayList();
     }
+    public void readFromFile() throws FileNotFoundException
+    {
+        File file = new File(this.filename);
+        Scanner scan = new Scanner(file);
+        String line;
 
+        while (scan.hasNextLine()) {
+            line = scan.nextLine();
+            Product elementProduct=createRecordFrom(line);
+            this.records.add(elementProduct);
+        }
+       scan.close();
+           
+    }
     public Product createRecordFrom(String line) {
         String[] recordsString = line.split(",");
         String productID=recordsString[0];
