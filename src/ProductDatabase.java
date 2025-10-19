@@ -39,7 +39,7 @@ public class ProductDatabase {
 
     public boolean contains(String key) {
         for (Product elemenProduct : records) {
-            if (elemenProduct.getSearchKey() == key) {
+            if (elemenProduct.getSearchKey().equals(key)) {
                 return true;
             }
         }
@@ -48,7 +48,7 @@ public class ProductDatabase {
 
     public Product getRecord(String key) {
         for (Product elemenProduct : records) {
-            if (elemenProduct.getSearchKey() == key) {
+            if (elemenProduct.getSearchKey().equals(key)) {
                 return elemenProduct;
             }
         }
@@ -58,17 +58,22 @@ public class ProductDatabase {
     public void insertRecord(Product record) {
         this.records.add(record);
     }
+
     public void deleteRecord(String key) {
-        Product recodProduct=getRecord(key);
-        this.records.remove(recodProduct);
+        Product recodProduct = getRecord(key);
+        if (recodProduct != null) {
+            this.records.remove(recodProduct);
+        }
     }
+
     public void saveToFile() throws FileNotFoundException {
-    PrintWriter writer = new PrintWriter(this.filename);
-    for(Product record:records)
-    {
-        writer.print(record.lineRepresentation());
+        PrintWriter writer = new PrintWriter(this.filename);
+        for (Product record : records) {
+            writer.print(record.lineRepresentation());
+        }
+        writer.close();
     }
-    }
+
     public Product createRecordFrom(String line) {
         String[] recordsString = line.split(",");
         String productID = recordsString[0];
