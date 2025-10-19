@@ -21,29 +21,48 @@ public class ProductDatabase {
         this.filename = filename;
         this.records = new ArrayList();
     }
-    public void readFromFile() throws FileNotFoundException
-    {
+
+    public void readFromFile() throws FileNotFoundException {
         File file = new File(this.filename);
         Scanner scan = new Scanner(file);
         String line;
 
         while (scan.hasNextLine()) {
             line = scan.nextLine();
-            Product elementProduct=createRecordFrom(line);
+            Product elementProduct = createRecordFrom(line);
             this.records.add(elementProduct);
         }
-       scan.close();
-           
+        scan.close();
+
     }
+
+    public boolean contains(String key) {
+        for (Product elemenProduct : records) {
+            if (elemenProduct.getSearchKey() == key) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Product getRecord(String key) {
+        for (Product elemenProduct : records) {
+            if (elemenProduct.getSearchKey() == key) {
+                return elemenProduct;
+            }
+        }
+        return null;
+    }
+
     public Product createRecordFrom(String line) {
         String[] recordsString = line.split(",");
-        String productID=recordsString[0];
-        String productName=recordsString[1];
-        String manufacturerName=recordsString[2];
-        String supplierName=recordsString[3];
-        int quantity =Integer.parseInt(recordsString[4]);
-        float price=Float.parseFloat(recordsString[5]);
-        Product elementProduct=new Product(productID, productName, manufacturerName, supplierName, quantity, price);
+        String productID = recordsString[0];
+        String productName = recordsString[1];
+        String manufacturerName = recordsString[2];
+        String supplierName = recordsString[3];
+        int quantity = Integer.parseInt(recordsString[4]);
+        float price = Float.parseFloat(recordsString[5]);
+        Product elementProduct = new Product(productID, productName, manufacturerName, supplierName, quantity, price);
         return elementProduct;
     }
 }
