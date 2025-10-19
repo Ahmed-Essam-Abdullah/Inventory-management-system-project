@@ -1,6 +1,7 @@
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -54,6 +55,20 @@ public class ProductDatabase {
         return null;
     }
 
+    public void insertRecord(Product record) {
+        this.records.add(record);
+    }
+    public void deleteRecord(String key) {
+        Product recodProduct=getRecord(key);
+        this.records.remove(recodProduct);
+    }
+    public void saveToFile() throws FileNotFoundException {
+    PrintWriter writer = new PrintWriter(this.filename);
+    for(Product record:records)
+    {
+        writer.print(record.lineRepresentation());
+    }
+    }
     public Product createRecordFrom(String line) {
         String[] recordsString = line.split(",");
         String productID = recordsString[0];
